@@ -1,0 +1,42 @@
+import hashlib
+
+
+url_database = {}
+
+def shorten_url(long_url):
+    
+    sha1_hash = hashlib.sha1(long_url.encode()).hexdigest()
+    short_code = sha1_hash[:8]  
+
+    
+    url_database[short_code] = long_url
+
+    return short_code
+
+def expand_url(short_code):
+    
+    long_url = url_database.get(short_code)
+    if long_url:
+        return long_url
+    else:
+        return "URL not found"
+
+if __name__ == "__main__":
+    while True:
+        print("1. Shorten a URL")
+        print("2. Expand a URL")
+        print("3. Quit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            long_url = input("Enter the long URL to shorten: ")
+            short_code = shorten_url(long_url)
+            print("Shortened URL:", short_code)
+
+        elif choice == "2":
+            short_code = input("Enter the short code to expand: ")
+            long_url = expand_url(short_code)
+            print("Expanded URL:", long_url)
+
+        elif choice == "3":
+            break
